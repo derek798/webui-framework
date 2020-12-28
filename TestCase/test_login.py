@@ -10,7 +10,7 @@ from page_object.loginpage import LoginPage
 class TestLogin:
     """测试登录"""
 
-    @pytest.mark.parametrize("name,pwd", [('admin', 'Admin123'), ('test', 'test123')])
+    @pytest.mark.parametrize("name,pwd", [('admin', 'Admin123456'), ('test', 'test123')])
     def test_001(self, drivers, name, pwd):
         login = LoginPage(drivers)
         login.username(name)

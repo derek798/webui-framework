@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from config.conf import LOCATE_MODE
-from tools.times import sleep
-from tools.logger import log
-
 """
 selenium基类
 本文件存放了selenium基类的封装方法
 """
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from config.conf import cm
+from tools.times import sleep
+from tools.logger import Logger
+
+log = Logger(__name__).logger
 
 
 class WebPage(object):
@@ -37,7 +38,7 @@ class WebPage(object):
     def element_locator(func, locator):
         """元素定位器"""
         name, value = locator
-        return func(LOCATE_MODE[name], value)
+        return func(cm.LOCATE_MODE[name], value)
 
     def find_element(self, locator):
         """寻找单个元素"""
@@ -91,7 +92,7 @@ class WebPage(object):
             alert.accept()
             return text
         else:
-            log.info("没有Alert弹窗提示!")
+            log.error("没有Alert弹窗提示!")
 
     def element_text(self, locator):
         """获取当前的text"""

@@ -15,7 +15,7 @@ class TestProduct:
     def is_login(self, request, drivers):
         login = LoginPage(drivers)
         login.username('admin')
-        login.password('Admin123')
+        login.password('Admin123456')
         login.submit()
         sleep(3)
 

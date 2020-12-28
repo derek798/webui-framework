@@ -1,22 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import os
 import logging
-from config.conf import LOG_PATH
-from tools.times import datetime_strftime
+from config.conf import cm
 
 
-class Log:
-    def __init__(self):
-        log_path = self.log_path[:self.log_path.rfind('/')]
-        if not os.path.exists(log_path):
-            os.makedirs(log_path)
-        self.logger = logging.getLogger()
+class Logger:
+    def __init__(self, name=None):
+        self.logger = logging.getLogger(name)
         if not self.logger.handlers:
             self.logger.setLevel(logging.INFO)
 
             # 创建一个handle写入文件
-            fh = logging.FileHandler(self.log_path, encoding='utf-8')
+            fh = logging.FileHandler(cm.log_path, encoding='utf-8')
             fh.setLevel(logging.INFO)
 
             # 创建一个handle输出到控制台
@@ -33,15 +28,10 @@ class Log:
             self.logger.addHandler(ch)
 
     @property
-    def log_path(self):
-        return os.path.join(LOG_PATH, '{}.log'.format(datetime_strftime()))
-
-    @property
     def fmt(self):
-        return '%(levelname)s\t%(asctime)s\t[%(filename)s:%(lineno)d]\t%(message)s'
+        return '%(levelname)s\t%(asctime)s\t%(name)s:%(lineno)d\t%(message)s'
 
-
-log = Log().logger
 
 if __name__ == '__main__':
+    log = Logger(__name__).logger
     log.info('你好')

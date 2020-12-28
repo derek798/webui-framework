@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import time
 import datetime
+from functools import wraps
 
 
 def timestamp():
@@ -23,6 +24,19 @@ def sleep(seconds=1.0):
     睡眠时间
     """
     time.sleep(seconds)
+
+
+def run_time(func):
+    """运行时间"""
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = timestamp()
+        res = func(*args, **kwargs)
+        print("Done！用时%.3f秒！" % (timestamp() - start_time))
+        return res
+
+    return wrapper
 
 
 if __name__ == '__main__':
